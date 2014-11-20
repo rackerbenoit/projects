@@ -46,4 +46,74 @@ public class BFS
       g4.addEdge(5,9);
       System.out.println("There are "+ determineUnconnected(g4)+" unconnected clusters.");
    }
+
+   private static int determineUnconnected(Graph g4)
+   {
+        int c = 0;
+        for (int i =0 ; i<g4.V(); i++) {
+            Bag<Integer> s = g4.adj(i);
+            if (!s.isFound()) {
+                c++;
+                s.setFound();
+                Queue<Bag<Integer>> q = new LinkedList<Bag<Integer>>();
+                q.add(s);
+                while (!q.isEmpty()) {
+                    Bag<Integer> v = q.remove();
+                    for (Integer j : v) {
+                        Bag<Integer> x = g4.adj(j);
+                        if (!x.isFound()) {
+                            x.setFound();
+                            q.add(x);
+                        }
+                    }
+                }
+            }
+        }
+        return c;
+    }
+
+    private static Bag<Integer> search(Graph g, int s, int t)
+    {
+        Bag<Integer> v = g.adj(s);
+        Bag<Integer> x = g.adj(t);
+        v.setFound();
+        Queue<Bag<Integer>> q = new LinkedList<Bag<Integer>>();
+        q.add(v);
+        while (!q.isEmpty()) {
+            v = q.remove();
+            if (v.equals(x)) return v;
+            for (Integer i: v) {
+                Bag<Integer> w = g.adj(i);
+                if (!w.isFound()) {
+                    w.setFound();
+                    q.add(w);
+                }
+            }
+        }
+        return null;
+    }
+
+    private static int dist(Graph g, int s, int t)
+    {
+        Bag<Integer> v = g.adj(s);
+        Bag<Integer> x = g.adj(t);
+        v.setFound();
+        int[] layer = new int[g.V()];
+        layer[s] = 0;
+        Queue<Bag<Integer>> q = new LinkedList<Bag<Integer>>();
+        q.add(v);
+        while (!q.isEmpty()) {
+            v = q.remove();
+            if (v == x) return layer[t];
+            for (Integer i: v) {
+                Bag<Integer> w = g.adj(i);
+                if (!w.isFound()) {
+                    w.setFound();
+                    q.add(w);
+                    layer[i] = layer[g.getVertex(v)] + 1;
+                }
+            }
+        }
+        return -1;
+    }
 }
