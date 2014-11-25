@@ -1,20 +1,19 @@
 import java.util.*;
-public class ReverseString
+public class reverse
 {
-	String phrase;
-	int size;
-
-	ReverseString(String line)  //constructor
+	public static void main (String[] args)
 	{
-
-		phrase = line;
-		size = phrase.length();
+		reverse("What is this?");
 	}
 
-	public void reverse(String lines){
+	public static void reverse(String lines)
+	{
+		int size = lines.length();
+		System.out.print("Your phrase backwards: ");
 		for(int times = size-1; times >= 0; times--)
 		{
-			System.out.print(phrase.charAt(times));
+			System.out.print(lines.charAt(times));
 		}
+		System.out.println();
 	}
 }
