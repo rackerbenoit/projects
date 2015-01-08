@@ -12,6 +12,17 @@ public class ProjectEulerProblem2
 {
    public static void main(String[] args)
    {
-      fibonacci(4000000);
+      System.out.println ("Numbers are: " + fib(4000000));
+   }
+
+   public static double fib(int maxNumber)
+   {
+      if (maxNumber <= 1)
+         return maxNumber;
+      else
+      {
+         double answer = (fib (maxNumber - 1) + fib (maxNumber - 2));
+         return answer;
+      }
    }
 }
